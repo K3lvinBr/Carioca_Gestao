@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "127495248788",
+    "project_id": "carioca-gestao",
+    "storage_bucket": "carioca-gestao.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127495248788:android:a1e52287ec89293328cd81",
+        "android_client_info": {
+          "package_name": "com.k3lvin.carioca_gestao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "127495248788-pd6q3lpf9po8pkf5kin1m3usu5afmsed.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.k3lvin.carioca_gestao",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "127495248788-cpu905tefedf7i9crbdu367na4me6ler.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6OgX_CpsV-8O7IUsGxRL1tnwrp_ZGgV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "127495248788-cpu905tefedf7i9crbdu367na4me6ler.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

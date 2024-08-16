@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "print_test",
-    "slug": "print_test",
+    "name": "Carioca Gestão",
+    "slug": "carioca_gestao",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -12,16 +12,38 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "requireFullScreen": true,
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.k3lvin.carioca_gestao",
+      "versionCode": 1
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
+    },
+    "plugins": [
+      [
+        "@react-native-google-signin/google-signin"
+      ],
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "ALL"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "dbfa36ce-b5b4-4a52-a187-daaf3383b531"
+      }
     }
   }
 }
