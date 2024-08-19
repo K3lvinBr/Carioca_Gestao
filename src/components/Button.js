@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { TouchableOpacity } from 'react-native';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import theme from '../styles/theme';
 
@@ -49,6 +49,7 @@ const Button = ({
   iconSize,
   paddingVertical,
   onPress,
+  loading,
   ...rest
 }) => {
   return (
@@ -71,7 +72,10 @@ const Button = ({
         />
       )}
       <ButtonText extraSmall={extraSmall} small={small} gray={gray} lightGray={lightGray}>
-        {title}
+        {loading ?
+          <ActivityIndicator size={theme.size.iconMedium} color={theme.colors.subText} />
+          : title
+        }
       </ButtonText>
       {rightIcon && (
         <RightIconComponent

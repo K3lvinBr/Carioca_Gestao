@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import styled from 'styled-components/native';
 import theme from '../styles/theme';
 import { Pasteis, Lanches, Doces, Bebidas } from './Products';
 import Image from '../components/Image';
+import { AppContext } from '../context/AppContext';
+import DrawerSheet from '../components/DrawerSheet';
 
 const Container = styled.View`
   flex: 1;
@@ -40,6 +42,7 @@ const TabIcon = ({ text, imageSource }) => (
 );
 
 const Menu = () => {
+  const { sheetModalRef } = useContext(AppContext);
   const Tab = createMaterialTopTabNavigator();
 
   return (
@@ -108,6 +111,9 @@ const Menu = () => {
           }}
         />
       </Tab.Navigator>
+      {!theme.isTablet &&
+        <DrawerSheet ref={sheetModalRef} />
+      }
       {theme.isTablet &&
         <TabletMenu>
         </TabletMenu>

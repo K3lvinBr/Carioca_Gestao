@@ -35,7 +35,7 @@ const Text = styled.Text`
 `;
 
 const Products = ({ category, filter }) => {
-  const { menu, sheetModalRef } = useContext(AppContext);
+  const { menu } = useContext(AppContext);
   const items = menu[category] || [];
 
   const filteredItems = filter ? items.filter(item => item.id === filter) : items;
@@ -76,9 +76,6 @@ const Products = ({ category, filter }) => {
           </ListEmptyContainer>
         }
       />
-      {!theme.isTablet &&
-        <DrawerSheet ref={sheetModalRef} />
-      }
     </Container>
   )
 }

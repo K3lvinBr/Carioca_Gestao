@@ -55,17 +55,17 @@ const ButtonText = styled.Text`
 `;
 
 const DrawerItem = ({ image, name, price, amount, removeButtons }) => {
-  const { sheetModalRef, addItemSelected, removeItemSelected, getTotalAmount } = useContext(AppContext);
+  const { closeDrawerSheet, addItemSelected, removeItemSelected, getTotalAmount } = useContext(AppContext);
 
   const handleAddItem = () => {
     addItemSelected({ image, name, price });
   };
 
   const handleRemoveItem = () => {
-    if (getTotalAmount() === 1) {
-      sheetModalRef.current?.close();
-    }
     removeItemSelected(name);
+    if (getTotalAmount() === 1) {
+      closeDrawerSheet();
+    }
   };
 
   const ButtonSquare = ({ text, onPress }) => (

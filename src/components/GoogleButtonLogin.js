@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { TouchableOpacity, Image, Text } from 'react-native';
+import { TouchableOpacity, Image, Text, ActivityIndicator } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import theme from '../styles/theme';
 
@@ -22,13 +22,17 @@ const GoogleButtonText = styled(Text)`
   margin-left: ${wp('2%')}px;
 `;
 
-const GoogleButtonLogin = ({ title, onPress, ...rest }) => {
+const GoogleButtonLogin = ({ title, onPress, loading, ...rest }) => {
   return (
     <GoogleButtonContainer onPress={onPress} activeOpacity={0.7} {...rest}>
-      <Image
-        source={require('../../assets/icon_google.png')}
-        style={{width: theme.size.iconMedium, height:  theme.size.iconMedium }}
-      />
+      {loading
+        ?
+        <ActivityIndicator size={theme.size.iconMedium} color={theme.colors.primary} />
+        :
+        <Image
+          source={require('../../assets/icon_google.png')}
+          style={{ width: theme.size.iconMedium, height: theme.size.iconMedium }}
+        />}
       <GoogleButtonText>{title}</GoogleButtonText>
     </GoogleButtonContainer>
   );

@@ -11,6 +11,8 @@ import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithCredential } 
 import { statusCodes } from '@react-native-google-signin/google-signin';
 import { auth, GoogleSignin } from '../config/firebase';
 import { useNavigation } from '@react-navigation/native';
+import { createNavigationContainerRef } from '@react-navigation/native';
+
 
 const Container = styled.View`
   flex: 1;
@@ -77,33 +79,46 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [loadingGoogle, setLoadingGoogle] = useState(false);
 
-  const navigation = useNavigation();
+  const navigationRef = createNavigationContainerRef();
 
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        console.log('Usuário logado com sucesso!');
-        setError('');
-        navigation.navigate('Home');
-      })
-      .catch(error => {
-        console.error('Erro ao fazer login:', error.code);
-        switch (error.code) {
-          case 'auth/invalid-email':
-            setError('E-mail inválido.');
-            break;
-          case 'auth/invalid-credential':
-            setError('Usuário não encontrado.');
-            break;
-          case 'auth/missing-password':
-            setError('Insira sua senha.');
-            break;
-          default:
-            setError('Erro ao fazer login.');
-            break;
-        }
-      });
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log('Usuário logado com sucesso!');
+      setError('');
+
+      if (navigationRef.current?.isReady()) {
+        navigationRef.current.navigate('Menu');
+      } else {
+        setTimeout(() => {
+          if (navigationRef.current?.isReady()) {
+            navigationRef.current.navigate('Menu');
+          }
+        }, 100);
+      }
+    } catch (error) {
+      console.error('Erro ao fazer login:', error.code);
+      switch (error.code) {
+        case 'auth/invalid-email':
+          setError('E-mail inválido.');
+          break;
+        case 'auth/invalid-credential':
+          setError('Usuário não encontrado.');
+          break;
+        case 'auth/missing-password':
+          setError('Insira sua senha.');
+          break;
+        default:
+          setError('Erro ao fazer login.');
+          break;
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleGoogleLogin = async () => {
@@ -112,12 +127,23 @@ const Login = () => {
       const userInfo = await GoogleSignin.signIn();
       const { idToken } = userInfo;
 
+      setError('');
+      setLoadingGoogle(true);
       const googleCredential = GoogleAuthProvider.credential(idToken);
       await signInWithCredential(auth, googleCredential);
 
-      navigation.navigate('Home');
-      console.log('User signed in with Google!');
+      if (navigationRef.current?.isReady()) {
+        navigationRef.current.navigate('Menu');
+      } else {
+        setTimeout(() => {
+          if (navigationRef.current?.isReady()) {
+            navigationRef.current.navigate('Menu');
+          }
+        }, 100);
+      }
+
     } catch (error) {
+      setError('Erro ao Entrar com o Google.');
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log('User cancelled the login flow');
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -125,8 +151,10 @@ const Login = () => {
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         console.log('Play services not available or outdated');
       } else {
-        console.error(error);
+        console.error('Error during Google sign-in:', error);
       }
+    } finally {
+      setLoadingGoogle(false);
     }
   };
 
@@ -161,11 +189,13 @@ const Login = () => {
           title="Entrar"
           onPress={handleLogin}
           style={{ marginTop: hp('4%') }}
+          loading={loading}
         />
         <Divider>ou</Divider>
         <GoogleButtonLogin
           title={'Entrar com o Google'}
           onPress={handleGoogleLogin}
+          loading={loadingGoogle}
         />
       </LoginContainer>
     </Container>

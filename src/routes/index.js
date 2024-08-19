@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { createNavigationContainerRef, NavigationContainer } from '@react-navigation/native';
 import { auth } from '../config/firebase';
 import Login from '../screens/Login';
 import Stacks from './stacks';
@@ -10,6 +10,8 @@ const AppRoutes = () => {
   const [user, setUser] = useState(null);
   const AppNavigator = theme.isTablet ? <Stacks /> : <Tabs />;
 
+  const navigationRef = createNavigationContainerRef();
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setUser(user);
@@ -19,7 +21,7 @@ const AppRoutes = () => {
   }, []);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       {user ? AppNavigator : <Login />}
     </NavigationContainer>
   );

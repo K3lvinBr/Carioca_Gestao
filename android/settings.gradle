@@ -1,4 +1,4 @@
-rootProject.name = 'print_test'
+rootProject.name = 'Carioca Gestão'
 
 dependencyResolutionManagement {
   versionCatalogs {

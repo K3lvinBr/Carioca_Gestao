@@ -8,7 +8,6 @@ import theme from '../styles/theme';
 import { AppContext } from '../context/AppContext';
 import DrawerItem from './DrawerItem';
 import ModalMenu from './ModalMenu';
-import LoadingModal from './LoadingModal';
 
 const Container = styled.View`
   flex: 1;
@@ -45,24 +44,18 @@ const ButtonContainer = styled.View`
 `;
 
 const DrawerSheet = forwardRef((props, ref) => {
-  const { menuItemsSelected, getTotalAmount, getTotalPrice, clearAllItems } = useContext(AppContext);
+  const { menuItemsSelected, getTotalAmount, getTotalPrice, clearAllItems, closeDrawerSheet } = useContext(AppContext);
   const snapPoints = useMemo(() => ['10%', '50%'], []);
 
   const [modalMenuVisible, setModalMenuVisible] = useState(false);
-  // const [modalVisible, setModalVisible] = useState(false);
 
   const openMenuModal = () => {
     setModalMenuVisible(true)
   }
 
-  // const openModal = () => {
-  //   setModalVisible(true)
-  //   setModalMenuVisible(false)
-  // }
-
   const cancelSelection = () => {
     clearAllItems()
-    ref.current?.close();
+    closeDrawerSheet();
   }
 
   return (
@@ -121,7 +114,6 @@ const DrawerSheet = forwardRef((props, ref) => {
       </Container>
 
       <ModalMenu products={menuItemsSelected} total={getTotalPrice()} modalVisible={modalMenuVisible} setModalVisible={setModalMenuVisible} />
-      {/* <LoadingModal products={menuItemsSelected} modalVisible={modalVisible} setModalVisible={setModalVisible} /> */}
     </BottomSheetModal>
   );
 });

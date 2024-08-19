@@ -40,7 +40,7 @@ const MainText = styled.Text`
 `;
 
 const MenuItem = ({ image, name, price }) => {
-  const { sheetModalRef, addItemSelected, getItemAmount } = useContext(AppContext);
+  const { presentDrawerSheet, addItemSelected, getItemAmount } = useContext(AppContext);
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const MenuItem = ({ image, name, price }) => {
     addItemSelected({ image, name, price });
 
     if (!theme.isTablet) {
-      sheetModalRef.current?.present();
+      presentDrawerSheet();
     }
   };
 

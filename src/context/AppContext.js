@@ -14,6 +14,7 @@ const AppProvider = ({ children }) => {
   const [menuItemsSelected, setMenuItemsSelected] = useState([]);
   const [printerConnected, setPrinterConnected] = useState(null);
   const [admin, setAdmin] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const sheetModalRef = useRef(null);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const AppProvider = ({ children }) => {
       if (user) {
         const isAdmin = await checkIfAdmin(user.uid);
         console.log(isAdmin);
-        
+
         if (isAdmin) {
           setAdmin(isAdmin);
           console.log('Usuário é administrador');
@@ -46,6 +47,18 @@ const AppProvider = ({ children }) => {
       unsubscribe();
     };
   }, []);
+
+  const presentDrawerSheet = () => {
+    if (!isDrawerOpen) {
+      sheetModalRef.current?.present();
+      setIsDrawerOpen(true);
+    }
+  };
+
+  const closeDrawerSheet = () => {
+    sheetModalRef.current?.close();
+    setIsDrawerOpen(false);
+  };
 
   const updateOrder = async () => {
     try {
@@ -111,6 +124,7 @@ const AppProvider = ({ children }) => {
   };
 
   const clearAllItems = () => {
+    console.log('Clearing all items');
     setMenuItemsSelected([]);
   };
 
@@ -120,8 +134,10 @@ const AppProvider = ({ children }) => {
       menuItemsSelected,
       orders,
       historic,
-      sheetModalRef,
       admin,
+      sheetModalRef,
+      presentDrawerSheet,
+      closeDrawerSheet,
       getItemAmount,
       getTotalAmount,
       getTotalPrice,

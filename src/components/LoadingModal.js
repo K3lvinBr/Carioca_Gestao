@@ -47,7 +47,7 @@ const ButtonContainer = styled.View`
 `;
 
 const LoadingModal = ({ modalVisible, action, setModalVisible, products, orderIdentifier, handleCloseMenuModal, orderFinalized }) => {
-    const { clearAllItems, sheetModalRef, printerConnected, setPrinterConnected, updateHistory, updateOrder } = useContext(AppContext);
+    const { clearAllItems, closeDrawerSheet, printerConnected, setPrinterConnected, updateHistory, updateOrder } = useContext(AppContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [isEnabled, setIsEnabled] = useState(false);
@@ -196,7 +196,7 @@ const LoadingModal = ({ modalVisible, action, setModalVisible, products, orderId
                 if (products && products.length > 0) {
                     clearAllItems();
                     handleCloseMenuModal();
-                    sheetModalRef.current?.close();
+                    closeDrawerSheet();
                 }
             }, 2000);
         }
