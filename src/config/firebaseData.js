@@ -1,6 +1,6 @@
 import { formatPrice } from '../utils/formatPrice';
 import { db } from './firebase';
-import { collection, doc, deleteDoc, getDocs, query, orderBy, addDoc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, deleteDoc, getDocs, query, orderBy, addDoc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
 
 const getMenu = async () => {
     try {
@@ -168,7 +168,38 @@ const deleteOrder = async (orderId) => {
     }
 };
 
+const addToFirestore = async () => {
+    const pasteis = [
+        { name: "Caldo de Cana Pequeno", price: 6.00 },
+        { name: "Caldo de Cana Médio", price: 7.00 },
+        { name: "Caldo de Cana Grande", price: 8.00 },
+        { name: "Refrigerante 600ml", price: 9.00 },
+        { name: "Refrigerante Lata", price: 6.00 }
+    ];
+
+
+    const removeSlashes = (name) => {
+        return name.replace(/\//g, ''); // Substitui todas as barras por hífens
+    };
+
+    try {
+        for (let item of pasteis) {
+            const documentId = removeSlashes(item.name);
+            // Criando um documento com o ID modificado
+            await setDoc(doc(db, "data/cardapio/bebidas", documentId), {
+                name: item.name, // Nome original, com barra
+                price: item.price,
+                image: '' // Adicione o link da imagem se houver
+            });
+            console.log(`Item ${item.name} adicionado com sucesso!`);
+        }
+    } catch (error) {
+        console.error("Erro ao adicionar item: ", error);
+    }
+};
+
 export {
+    addToFirestore,
     getMenu,
     getOrders,
     getHistory,

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import { formatPrice } from '../utils/formatPrice';
-import { getHistory, getMenu, getOrders } from '../config/firebaseData';
+import { addToFirestore, getHistory, getMenu, getOrders } from '../config/firebaseData';
 import { checkIfAdmin } from '../config/usersData'
 import { auth } from '../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -21,6 +21,7 @@ const AppProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const menuList = await getMenu();
+        // await addToFirestore()
         setMenu(menuList);
         updateOrder();
         updateHistory();

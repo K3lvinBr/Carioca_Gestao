@@ -91,7 +91,7 @@ const Historic = () => {
         </LoadingContainer>
       ) : (
         <FlatList
-          data={historic}
+          data={historic.slice().reverse()}
           keyExtractor={(i, index) => index.toString()}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}

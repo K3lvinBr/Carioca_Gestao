@@ -38,7 +38,16 @@ const Products = ({ category, filter }) => {
   const { menu } = useContext(AppContext);
   const items = menu[category] || [];
 
-  const filteredItems = filter ? items.filter(item => item.id === filter) : items;
+  const filterValues = filter ? filter.split(',').map(value => value.trim().toLowerCase()) : [];
+
+  const matchesFilter = (itemName) => {
+    const itemNameLower = itemName.toLowerCase();
+    return filterValues.some(value => itemNameLower.startsWith(value));
+  };
+
+  const filteredItems = filterValues.length
+    ? items.filter(item => matchesFilter(item.name))
+    : items;
 
   const data =
     filteredItems.length === 0
@@ -114,10 +123,11 @@ const Pasteis = () => {
           contentContainerStyle={{ paddingLeft: theme.spacing.small }}
         >
           <FilterButton title="Carne" iconSize={hp('2%')} IconComponent={MaterialCommunityIcons} iconName="food-steak" filterValue="carne" />
-          <FilterButton title="Queijo" iconSize={hp('1.5%')} IconComponent={FontAwesome6} iconName="cheese" filterValue="queijo" />
+          <FilterButton title="Queijo" iconSize={hp('1.5%')} IconComponent={FontAwesome6} iconName="cheese" filterValue="queijo, 4, especial, pizza, portuguesa" />
           <FilterButton title="Frango" IconComponent={MaterialCommunityIcons} iconName="food-drumstick" filterValue="frango" />
           <FilterButton title="Calabresa" IconComponent={MaterialCommunityIcons} iconName="sausage" filterValue="calabresa" />
-          <FilterButton title="Camarão" IconComponent={FontAwesome6} iconName="shrimp" filterValue="camarao" />
+          <FilterButton title="Legumes" IconComponent={FontAwesome6} iconName="carrot" filterValue="palmito, brócoli, rúcula" />
+          <FilterButton title="Marítimos" IconComponent={FontAwesome6} iconName="shrimp" filterValue="camarão, atum" />
         </ScrollView>
       </View>
       <Products category="pasteis" filter={filter} />

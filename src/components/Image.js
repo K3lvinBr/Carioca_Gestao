@@ -38,14 +38,15 @@ const StyledImage = styled.Image`
 `;
 
 const Image = ({ source, size = 'medium' }) => {
-  const imageSource = typeof source === 'string' ? { uri: source } : source;
+  const imageSource = (typeof source === 'string' && source === '')
+    ? require('../../assets/images/image_empty.jpg')
+    : (typeof source === 'string' ? { uri: source } : source);
 
   return (
     <ImageContainer size={size}>
       <StyledImage
         resizeMode='cover'
         source={imageSource}
-        defaultSource={require('../../assets/images/image_empty.jpg')}
       />
     </ImageContainer>
   );

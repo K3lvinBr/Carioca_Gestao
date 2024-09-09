@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "127495248788-kc2oh10qggca7rpad26fd6ve53ls0a84.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.k3lvin.carioca_gestao",
+            "certificate_hash": "35c7b8a73fc2e3038540116d8bdfd8913bbe76f4"
+          }
+        },
+        {
           "client_id": "127495248788-pd6q3lpf9po8pkf5kin1m3usu5afmsed.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

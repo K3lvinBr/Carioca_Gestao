@@ -24,7 +24,7 @@
       },
       "softwareKeyboardLayoutMode": "pan",
       "package": "com.k3lvin.carioca_gestao",
-      "versionCode": 1
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/icon.png"
